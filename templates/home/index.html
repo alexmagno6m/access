@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}
+Access
+{% endblock title %}
+{% block content %}
+<h3>Access Credentials</h3>
+
+    <div class="ui fifteen column padded grid">
+        <div class="two column row">
+            <div class="column">
+            <form class="ui form" method="GET">{% csrf_token %}
+
+                <div class="ui left icon action input">
+                    <i class="search icon"></i>
+                    <input type="number" id="kword" name="kword" required placeholder="Ingresa el numero de NIP">
+
+                    <button type="submit" class="ui blue submit button">Buscar</button>
+                </div>
+            </form>
+            </div>
+        </div>
+        <div class="column">
+            <table class="ui celled table">
+                <thead>
+                <tr>
+                    <th>Primer Nombre</th>
+                    <th> Segundo Nombre </th>
+                    <th>Primer Apellido</th>
+                    <th>Segundo Apellido</th>
+                    <th>Curso</th>
+                    <th>Correo institucional</th>
+                    <th>Clave Correo institucional</th>
+                    <th>Usuario Abaco</th>
+                    <th>Clave Abaco</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    {% for item in object_list %}
+                        <td>{{ item.primer_nombre }}</td>
+                        <td>{{ item.segundo_nombre }}</td>
+                        <td>{{ item.primer_apellido }}</td>
+                        <td>{{ item.segundo_apellido }}</td>
+                        <td>{{ item.curso }}</td>
+                        {% if item.email == "#N/D" %}
+                            <td class="negative"><i class="icon close"></i> No Asignado</td>
+                        {% else %}
+                            <td class="positive"><i class="icon checkmark"></i> {{ item.email }} </td>
+                        {% endif %}
+                        {% if item.password == "#N/D" %}
+                            <td class="negative"><i class="icon close"></i> No Asignado</td>
+                        {% else %}
+                            <td class="positive"><i class="icon checkmark"></i> {{ item.password }} </td>
+                        {% endif %}
+                        {% if item.usuario_abaco %}
+                            <td class="positive"><i class="icon checkmark"></i> {{ item.usuario_abaco}}</td>
+                        {% else %}
+                            <td class="warning"><i class="attention icon"></i> Pendiente por asignar </td>
+                        {% endif %}
+                        {% if item.clave_abaco %}
+                            <td class="positive"><i class="icon checkmark"></i> {{ item.clave_abaco}}</td>
+                        {% else %}
+                            <td class="warning"><i class="attention icon"></i> Pendiente por asignar </td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+
+
+
+
+{% endblock content %}
